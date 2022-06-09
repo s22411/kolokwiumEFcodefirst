@@ -26,7 +26,7 @@ namespace kolokwium.Controllers
             var musician = await _context.Musicians.Where(m => m.IdMusician == id).Select(m => new GetMusicianDTO
             {
                 Musician = m,
-                Tracks = m.Musician_Tracks.Select(t => t.Track).ToList()
+                Tracks = m.Musician_Tracks.Join(_context.Tracks, mt => mt.IdTrack, t => t.IdTrack, (mt, t) => t).ToList()
             }).FirstOrDefaultAsync();
             
             
@@ -54,7 +54,7 @@ namespace kolokwium.Controllers
             {
                 return BadRequest("Musician is in album");
             }
-            
+
             _context.Musicians.Remove(musician);
             await _context.SaveChangesAsync();
             return Ok();

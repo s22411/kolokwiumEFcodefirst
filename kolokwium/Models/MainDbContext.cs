@@ -38,7 +38,8 @@ namespace kolokwium.Models
                     new Musician { IdMusician = 1, FirstName = "John", LastName = "Smith", Nickname = "JSmith" },
                     new Musician { IdMusician = 2, FirstName = "Mary", LastName = "Jane", Nickname = "MJane" },
                     new Musician { IdMusician = 3, FirstName = "Bob", LastName = "Dylan", Nickname = "BDylan" },
-                    new Musician { IdMusician = 4, FirstName = "John", LastName = "Lennon", Nickname = "JLennon" }
+                    new Musician { IdMusician = 4, FirstName = "John", LastName = "Lennon", Nickname = "JLennon" },
+                    new Musician { IdMusician = 5, FirstName = "Johnnnn", LastName = "Lennnnnon", Nickname = "JLeeennon" }
                 );
             });
 
@@ -60,6 +61,8 @@ namespace kolokwium.Models
             modelBuilder.Entity<Musician_Track>(e => 
             {
                 e.HasKey(mt => new { mt.IdTrack, mt.IdMusician });
+                e.HasOne(mt => mt.Track).WithMany(t => t.Musician_Tracks).HasForeignKey(mt => mt.IdTrack);
+                e.HasOne(mt => mt.Musician).WithMany(m => m.Musician_Tracks).HasForeignKey(mt => mt.IdMusician);
 
                 e.HasData(
                     new Musician_Track { IdTrack = 1, IdMusician = 1 },
