@@ -49,7 +49,7 @@ namespace kolokwium.Controllers
             }
 
 
-            if (musician.Musician_Tracks.Count > 0)
+            if (musician.Musician_Tracks is null)
             {
 
             
