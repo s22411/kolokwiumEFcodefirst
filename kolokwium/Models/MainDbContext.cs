@@ -32,7 +32,7 @@ namespace kolokwium.Models
                 e.Property(m => m.FirstName).HasMaxLength(30).IsRequired();
                 e.Property(m => m.LastName).HasMaxLength(50).IsRequired();
                 e.Property(m => m.Nickname).HasMaxLength(20);
-                e.HasMany(m => m.Tracks).WithMany(t => t.Musicians);
+                e.HasMany(m => m.Musician_Tracks).WithOne(t => t.Musician);
 
                 e.HasData(
                     new Musician { IdMusician = 1, FirstName = "John", LastName = "Smith", Nickname = "JSmith" },
@@ -47,7 +47,8 @@ namespace kolokwium.Models
                 e.HasKey(t => t.IdTrack);
                 e.Property(t => t.TrackName).HasMaxLength(20).IsRequired();
                 e.Property(t => t.Duration).IsRequired();
-                e.HasMany(t => t.Musicians).WithMany(m => m.Tracks);
+                e.HasMany(t => t.Musician_Tracks).WithOne(m => m.Track);
+                e.HasOne(t => t.Album).WithMany(a => a.Tracks).HasForeignKey(t => t.IdMusicAlbum);
 
                 e.HasData(
                     new Track { IdTrack = 1, TrackName = "Track 1", Duration = 120, IdMusicAlbum = 1 },
