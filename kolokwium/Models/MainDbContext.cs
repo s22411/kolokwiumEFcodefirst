@@ -18,6 +18,7 @@ namespace kolokwium.Models
 
         public DbSet<Musician> Musicians { get; set; }
         public DbSet<Track> Tracks { get; set; }
+        public DbSet<Musician_Track> Musician_Tracks { get; set; }
         public DbSet<Album> Albums { get; set; }
         public DbSet<MusicLabel> MusicLabels { get; set; }
 
@@ -55,6 +56,10 @@ namespace kolokwium.Models
                 );
             });
             
+            modelBuilder.Entity<Musician_Track>(e => 
+            {
+                e.HasKey(mt => new { mt.IdTrack, mt.IdMusician });
+            });
 
             modelBuilder.Entity<Album>(e => 
             {
