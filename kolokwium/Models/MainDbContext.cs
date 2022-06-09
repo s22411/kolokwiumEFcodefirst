@@ -59,6 +59,15 @@ namespace kolokwium.Models
             modelBuilder.Entity<Musician_Track>(e => 
             {
                 e.HasKey(mt => new { mt.IdTrack, mt.IdMusician });
+
+                e.HasData(
+                    new Musician_Track { IdTrack = 1, IdMusician = 1 },
+                    new Musician_Track { IdTrack = 1, IdMusician = 3 },
+                    new Musician_Track { IdTrack = 2, IdMusician = 2 },
+                    new Musician_Track { IdTrack = 2, IdMusician = 3 },
+                    new Musician_Track { IdTrack = 3, IdMusician = 1 },
+                    new Musician_Track { IdTrack = 3, IdMusician = 3 }
+                );
             });
 
             modelBuilder.Entity<Album>(e => 
@@ -67,6 +76,11 @@ namespace kolokwium.Models
                 e.Property(a => a.AlbumName).HasMaxLength(30).IsRequired();
                 e.Property(a => a.PublishDate).IsRequired();
                 e.HasOne(a => a.MusicLabel).WithMany(ml => ml.Albums);
+                e.HasData(
+                    new Album { IdAlbum = 1, AlbumName = "Album 1", PublishDate = new DateTime(2018, 1, 1), IdMusicLabel = 1 },
+                    new Album { IdAlbum = 2, AlbumName = "Album 2", PublishDate = new DateTime(2020, 2, 1), IdMusicLabel = 2 },
+                    new Album { IdAlbum = 3, AlbumName = "Album 3", PublishDate = new DateTime(2019, 3, 1), IdMusicLabel = 3 }
+                );
             });
 
             modelBuilder.Entity<MusicLabel>(e => 
@@ -74,6 +88,12 @@ namespace kolokwium.Models
                 e.HasKey(ml => ml.IdMusicLabel);
                 e.Property(ml => ml.Name).HasMaxLength(50).IsRequired();
                 e.HasMany(ml => ml.Albums);
+
+                e.HasData(
+                    new MusicLabel { IdMusicLabel = 1, Name = "Music Label 1" },
+                    new MusicLabel { IdMusicLabel = 2, Name = "Music Label 2" },
+                    new MusicLabel { IdMusicLabel = 3, Name = "Music Label 3" }
+                );
             });
 
         }
