@@ -48,11 +48,17 @@ namespace kolokwium.Controllers
                 return NotFound("No musician with this id");
             }
 
-            var tracks = await _context.Musician_Tracks.Join(_context.Tracks, mt => mt.IdTrack, t => t.IdTrack, (mt, t) => new { mt, t }).Where(t => t.t.IdMusicAlbum != null).ToListAsync();
 
-            if (tracks.Count > 0)
+            if (musician.Musician_Tracks.Count > 0)
             {
-                return BadRequest("Musician is in album");
+
+            
+                var tracks = await _context.Musician_Tracks.Join(_context.Tracks, mt => mt.IdTrack, t => t.IdTrack, (mt, t) => new { mt, t }).Where(t => t.t.IdMusicAlbum != null).ToListAsync();
+
+                if (tracks.Count > 0)
+                {
+                    return BadRequest("Musician is in album");
+                }
             }
 
             _context.Musicians.Remove(musician);
